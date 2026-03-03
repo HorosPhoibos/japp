@@ -212,3 +212,94 @@ async function fetchNews() {
 }
 fetchNews();
 updateGame();
+// 7. KOTAK POS TELEGRAM (Support Foto & Teks)
+async function sendToTelegram() {
+    const messageInput = document.getElementById('telegram-message');
+    const photoInput = document.getElementById('telegram-photo');
+    const statusText = document.getElementById('tg-status');
+    const btn = document.getElementById('btn-send-tg');
+    
+    const message = messageInput.value.trim();
+    const photoFile = photoInput.files[0];
+
+    // Cek apakah kosong semua
+    if (!message && !photoFile) {
+        statusText.innerText = "Isi pesan atau pilih foto dulu, Agen! 📝";
+        statusText.style.color = "#d90000";
+        statusText.style.display = "block";
+        return;
+    }
+
+    // Ingat: Ganti Token dengan yang BARU kalau yang lama sudah di-revoke!
+    const botToken = '8680888561:AAGGMb2Ztpnp29CT4YZ_EE-Rm8rqseCCCzo'; 
+    const chatId = '-5245846932'; 
+
+    try {
+        btn.innerText = "Mengirim... ⏳";
+        btn.disabled = true;
+        btn.style.opacity = "0.7";
+
+        let url = '';
+        let options = {};
+
+        // JIKA ADA FOTO
+        if (photoFile) {
+            url = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+            
+            // Kita pakai FormData untuk mengirim file
+            const formData = new FormData();
+            formData.append('chat_id', chatId);
+            formData.append('photo', photoFile);
+            
+            // Kalau ada teks juga, jadikan caption
+            if (message) {
+                formData.append('caption', `📬 *Laporan Visual JCU:*\n\n${message}`);
+                formData.append('parse_mode', 'Markdown');
+            }
+
+            options = {
+                method: 'POST',
+                body: formData 
+                // Catatan: jangan set 'Content-Type' manual kalau pakai FormData
+            };
+        } 
+        // JIKA HANYA TEKS (TANPA FOTO)
+        else {
+            url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: `📬 *Pesan Baru dari JCU:*\n\n${message}`,
+                    parse_mode: 'Markdown'
+                })
+            };
+        }
+
+        const response = await fetch(url, options);
+
+        if (response.ok) {
+            messageInput.value = '';
+            photoInput.value = ''; // Reset file input
+            statusText.innerText = "Laporan berhasil masuk ke markas! ✅";
+            statusText.style.color = "#5c9e42";
+        } else {
+            statusText.innerText = "Gagal mengirim laporan... ❌";
+            statusText.style.color = "#d90000";
+            console.log("Error dari Telegram:", await response.json());
+        }
+    } catch (error) {
+        statusText.innerText = "Jaringan terputus! 📡";
+        statusText.style.color = "#d90000";
+        console.error(error);
+    } finally {
+        statusText.style.display = "block";
+        btn.innerText = "Kirim Pesan 🚀";
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        
+        // Hilangkan notifikasi setelah 3 detik
+        setTimeout(() => { statusText.style.display = "none"; }, 3000);
+    }
+}

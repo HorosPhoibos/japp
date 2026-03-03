@@ -81,14 +81,17 @@
                 </div>
 
                 <div class="menu-card">
-                    <h2 class="card-title pixel-text">📝 Misi Rahasia (To-Do)</h2>
-                    <div class="todo-input-area">
-                        <input type="text" id="todo-input" class="todo-input" placeholder="Ketik rencana nunda kerjaan di sini...">
-                        <button onclick="addTodo()" class="btn-pixel todo-btn">Gas!</button>
-                    </div>
-                    <ul id="todo-list" class="todo-list">
-                        </ul>
-                </div>
+    <h2 class="card-title pixel-text">📮 Kotak Pos Rahasia</h2>
+    <p class="tiny-text">Kirim laporan/pesan darurat ke markas 📩</p>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+        <textarea id="telegram-message" class="todo-input" style="width: 100%; height: 60px; resize: none;" placeholder="Tulis pesan untuk markas di sini..."></textarea>
+        
+        <input type="file" id="telegram-photo" accept="image/*" class="todo-input" style="font-size: 14px; padding: 5px; cursor: pointer;">
+        
+        <button onclick="sendToTelegram()" id="btn-send-tg" class="btn-pixel">Kirim Pesan 🚀</button>
+        <p id="tg-status" class="tiny-text" style="display:none; text-align:center; margin: 0;"></p>
+    </div>
+</div>
 
                 <div class="grid-2col">
                     <div class="menu-card">
