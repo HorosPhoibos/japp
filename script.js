@@ -94,10 +94,8 @@ function deleteTodo(index) {
     renderTodos();
 }
 
-// Render ToDo pertama kali
 renderTodos();
 
-// Mungkinkan Enter untuk tambah ToDo
 document.getElementById('todo-input').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') addTodo();
 });
@@ -128,7 +126,6 @@ function updateGame() {
     if (isGameOver) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Langit Biru
     ctx.fillStyle = '#87CEEB'; ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     birdV += 0.3; birdY += birdV; 

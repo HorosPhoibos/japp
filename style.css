@@ -93,7 +93,7 @@ body {
 .weather-note { font-size: 18px; margin: 10px 0 0 0; font-style: italic; }
 .map-embed-container { border: 3px solid var(--wood-dark); border-radius: 4px; overflow: hidden; }
 
-/* TO-DO LIST (BARU) */
+/* TO-DO LIST */
 .todo-input-area { display: flex; gap: 10px; margin-bottom: 15px; }
 .todo-input { 
     flex: 1; padding: 8px; font-family: 'VT323', monospace; font-size: 20px;
@@ -127,11 +127,35 @@ body {
 .btn-pixel:active { transform: translate(2px, 2px); box-shadow: none; }
 .map-btn { background: #dca95e; border-color: var(--wood-dark); color: var(--wood-dark); }
 
-/* Game */
+/* Game & Flappy Buddy Box */
 .game-container { position: relative; border: 4px solid var(--wood-dark); width: 100%; display: flex; justify-content: center; background: #87CEEB;}
 #flappyCanvas { display: block; max-width: 100%; }
 .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(252, 225, 166, 0.9); display:flex; flex-direction:column; justify-content:center; align-items:center; }
 .mini-btn { width: auto; padding: 5px 15px; margin-top: 10px; }
+
+/* KOTAK ANIMASI FLAPPY BUDDY (BARU) */
+.buddy-frame {
+    background: #87CEEB; /* Langit biru seperti di game */
+    border: 4px solid var(--wood-dark);
+    height: 200px; /* Tingginya disamakan dengan canvas game */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 3px 3px 10px rgba(0,0,0,0.2);
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.buddy-jump {
+    width: 65px; /* Sesuaikan ukuran burung flappyju */
+    image-rendering: pixelated;
+    animation: flappyBounce 0.7s infinite alternate ease-in-out;
+}
+
+@keyframes flappyBounce {
+    0% { transform: translateY(40px); }
+    100% { transform: translateY(-40px); }
+}
 
 @media (max-width: 650px) {
     .character-panel { border-right: none; border-bottom: 4px dashed var(--wood-border); }
