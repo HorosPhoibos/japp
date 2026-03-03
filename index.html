@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JCU (Juju's Command Center)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="bgm" loop>
+        <source src="bgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="splash-screen">
+        <div class="mail-letter">
+            <h2 class="pixel-text">✉️ Surat Rahasia</h2>
+            <img src="depan.png" alt="Agen" class="mail-avatar">
+            <div class="mail-content">
+                <p>Kepada Agen Juju,</p>
+                <p>Selamat datang di JCU (Juju's Command Center)! Pastikan asupan kafein sudah masuk ke aliran darah sebelum memulai misi CSR hari ini.</p>
+                <p>Tetap senyum meski warga bawel, karena kamu adalah pahlawan tanpa tanda jasa (tapi tetap butuh gaji). Semangat! ✨</p>
+            </div>
+            <button id="btn-mengerti" class="btn-pixel">Aktifkan JCU 🚜</button>
+        </div>
+    </div>
+
+    <div id="main-app" class="stardew-menu" style="display: none;">
+        
+        <button id="music-toggle" class="btn-music">🎵 BGM: ON</button>
+
+        <div class="menu-layout">
+            
+            <div class="character-panel">
+                <div class="portrait-box">
+                    <img src="juju.png" alt="Juju Profile" class="avatar-giant">
+                </div>
+                <h1 class="char-name pixel-text">JUJU</h1>
+                <p class="char-title">⭐ CSR Specialist</p>
+                
+                <div class="status-inset">
+                    <p>Waktu Server:</p>
+                    <div id="clock" class="clock-display pixel-text">00:00:00</div>
+                    <p style="margin-top:10px;">Status Shift:</p>
+                    <div id="countdown" class="timer-display pixel-text">Menghitung...</div>
+                </div>
+            </div>
+
+            <div class="widgets-panel">
+                
+                <div class="grid-2col">
+                    <div class="menu-card">
+                        <h2 class="card-title pixel-text">⛅ Teropong Langit</h2>
+                        <div class="weather-box">
+                            <div class="weather-row">
+                                <span>📍 Pekanbaru</span>
+                                <span id="temp-pku" class="temp pixel-text">--°</span>
+                            </div>
+                            <div class="weather-row">
+                                <span>📍 Jakarta</span>
+                                <span id="temp-jkt" class="temp pixel-text">--°</span>
+                            </div>
+                        </div>
+                        <p id="weather-advice" class="weather-note">Menghubungi pawang hujan...</p>
+                    </div>
+
+                    <div class="menu-card">
+                        <h2 class="card-title pixel-text">🗺️ Satelit Pengintai</h2>
+                        <p class="tiny-text">Titik koordinat misi hari ini 📡</p>
+                        <div class="map-embed-container">
+                            <iframe 
+                                src="https://maps.google.com/maps?q=Pertamina%20Pekanbaru&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                                width="100%" height="100" style="border:0;" allowfullscreen="" loading="lazy">
+                            </iframe>
+                        </div>
+                        <a href="https://share.google/DBm3KtEJlTcGtuAoY" target="_blank" class="btn-pixel map-btn" style="margin-top:5px; padding:5px; font-size:8px;">
+                            Buka Map Penuh 📍
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <h2 class="card-title pixel-text">📝 Misi Rahasia (To-Do)</h2>
+                    <div class="todo-input-area">
+                        <input type="text" id="todo-input" class="todo-input" placeholder="Ketik rencana nunda kerjaan di sini...">
+                        <button onclick="addTodo()" class="btn-pixel todo-btn">Gas!</button>
+                    </div>
+                    <ul id="todo-list" class="todo-list">
+                        </ul>
+                </div>
+
+                <div class="grid-2col">
+                    <div class="menu-card">
+                        <h2 class="card-title pixel-text">📖 Gulungan Motivasi</h2>
+                        <p id="daily-verse" class="verse-text">Membuka segel perkamen kuno...</p>
+                    </div>
+
+                    <div class="menu-card">
+                        <h2 class="card-title pixel-text">📈 Cuan Tracker</h2>
+                        <div class="market-grid">
+                            <div class="tradingview-widget-container market-inset">
+                                <div class="tradingview-widget-container__widget"></div>
+                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                                { "symbol": "FX_IDC:XAUIDR", "width": "100%", "height": "90", "locale": "id", "dateRange": "1D", "colorTheme": "light", "isTransparent": true, "autosize": true }
+                                </script>
+                            </div>
+                            <div class="tradingview-widget-container market-inset">
+                                <div class="tradingview-widget-container__widget"></div>
+                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                                { "symbol": "IDX:COMPOSITE", "width": "100%", "height": "90", "locale": "id", "dateRange": "1D", "colorTheme": "light", "isTransparent": true, "autosize": true }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2col">
+                    <div class="menu-card">
+                        <h2 class="card-title pixel-text">📰 Gosip Desa</h2>
+                        <div id="newsContainer" class="news-list">
+                            <p>Menunggu burung gagak pengantar pesan...</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-card game-area">
+                        <h2 class="card-title pixel-text">🎮 Mode Kabur</h2>
+                        <p class="tiny-text" style="text-align:center;">Lompatin rintangan kerjaan!</p>
+                        <div class="game-container">
+                            <canvas id="flappyCanvas" width="220" height="200"></canvas>
+                            <div id="game-over-overlay" class="overlay" style="display:none;">
+                                <p class="pixel-text" style="color:#d90000; font-size:12px;">KETAHUAN BOS!</p>
+                                <p class="pixel-text" style="font-size:10px;">Skor Kabur: <span id="final-score">0</span></p>
+                                <button onclick="resetGame()" class="btn-pixel mini-btn">COBA LAGI</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
