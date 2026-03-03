@@ -53,53 +53,6 @@ function updateWorkTimer() {
 setInterval(updateWorkTimer, 1000);
 updateWorkTimer();
 
-// 2. TO-DO LIST (MISI RAHASIA)
-let todos = [
-    { text: "Tarik napas panjang hadapi warga 🧘‍♀️", done: false },
-    { text: "Cari alasan kalau ditanya bos 👀", done: false },
-    { text: "Isi bensin full buat kabur cepat 🚜", done: false }
-];
-
-function renderTodos() {
-    const list = document.getElementById('todo-list');
-    list.innerHTML = '';
-    todos.forEach((todo, index) => {
-        const li = document.createElement('li');
-        li.className = `todo-item ${todo.done ? 'done' : ''}`;
-        li.innerHTML = `
-            <span onclick="toggleTodo(${index})">${todo.done ? '✅' : '🔲'} ${todo.text}</span>
-            <button onclick="deleteTodo(${index})" class="delete-btn">❌</button>
-        `;
-        list.appendChild(li);
-    });
-}
-
-function addTodo() {
-    const input = document.getElementById('todo-input');
-    const text = input.value.trim();
-    if (text) {
-        todos.push({ text: text, done: false });
-        input.value = '';
-        renderTodos();
-    }
-}
-
-function toggleTodo(index) {
-    todos[index].done = !todos[index].done;
-    renderTodos();
-}
-
-function deleteTodo(index) {
-    todos.splice(index, 1);
-    renderTodos();
-}
-
-renderTodos();
-
-document.getElementById('todo-input').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') addTodo();
-});
-
 // 3. AYAT ALKITAB (Perkamen)
 async function fetchRandomVerse() {
     const verseEl = document.getElementById('daily-verse');
